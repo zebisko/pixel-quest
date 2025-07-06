@@ -1,0 +1,150 @@
+.progress-bar-container {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.progress-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: #e2e8f0;
+}
+
+.progress-bar-label {
+  font-weight: 500;
+}
+
+.progress-bar-percentage {
+  font-weight: 600;
+  color: #a0aec0;
+}
+
+.progress-bar-track {
+  position: relative;
+  width: 100%;
+  height: var(--progress-height, 8px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--progress-radius, 4px);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--progress-radius, 4px);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Color variants */
+.progress-primary {
+  background: linear-gradient(90deg, #805ad5 0%, #6b46c1 100%);
+}
+
+.progress-secondary {
+  background: linear-gradient(90deg, #4fd1c5 0%, #38b2ac 100%);
+}
+
+.progress-success {
+  background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+}
+
+.progress-warning {
+  background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.progress-danger {
+  background: linear-gradient(90deg, #f56565 0%, #e53e3e 100%);
+}
+
+/* Animated shimmer effect */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  background-size: 200% 100%;
+  animation: progressShimmer 1.5s infinite linear;
+  border-radius: var(--progress-radius, 4px);
+}
+
+@keyframes progressShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Sizes */
+.progress-sm {
+  --progress-height: 4px;
+}
+
+.progress-md {
+  --progress-height: 8px;
+}
+
+.progress-lg {
+  --progress-height: 12px;
+}
+
+/* Rounded variant */
+.progress-rounded .progress-bar-track,
+.progress-rounded .progress-bar-fill {
+  border-radius: 9999px;
+}
+
+/* Striped variant */
+.progress-striped .progress-bar-fill {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.15) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  animation: progressStripes 1s linear infinite;
+}
+
+@keyframes progressStripes {
+  from { background-position: 1rem 0; }
+  to { background-position: 0 0; }
+}
+
+/* Glow effect */
+.progress-glow .progress-bar-fill {
+  box-shadow: 0 0 10px 2px currentColor;
+  opacity: 0.85;
+}
+
+/* Transition effects */
+.progress-slow .progress-bar-fill {
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-fast .progress-bar-fill {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .progress-bar-labels {
+    font-size: 0.8rem;
+  }
+  
+  .progress-bar-percentage {
+    display: none;
+  }
+}
