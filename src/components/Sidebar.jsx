@@ -13,7 +13,8 @@ const Sidebar = ({
   xp, 
   levelProgress, 
   revealedPixels, 
-  completedArtworks 
+  completedArtworks,
+  artworkProgress 
 }) => (
   <aside className={cn(
     "fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-border transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 h-screen flex flex-col",
@@ -81,7 +82,7 @@ const Sidebar = ({
             {levelProgress.current} / {levelProgress.total} xp to next level
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            {revealedPixels.length}/625 pixels revealed
+            {artworkProgress?.current || 0} / {artworkProgress?.total || 0} pixels revealed
           </p>
         </div>
         

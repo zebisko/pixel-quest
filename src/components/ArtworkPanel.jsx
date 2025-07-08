@@ -1,31 +1,34 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import SvgArtwork from './SvgArtwork.jsx';
 
 const ArtworkPanel = ({ currentArtwork, revealedPixels }) => (
   <div className="space-y-6">
-    <Card className="border-border bg-card shadow-sm rounded-2xl">
-      <CardHeader className="text-center pb-3 p-4">
-        <CardTitle className="text-xl font-semibold text-foreground leading-tight mb-0.5">
+    <div className="space-y-3">
+      <div className="text-left">
+        <h2 className="text-xl font-semibold text-foreground leading-tight mb-0">
           {currentArtwork?.title || 'loading...'}
-        </CardTitle>
-        <CardDescription className="text-sm text-muted-foreground">
+        </h2>
+        <p className="text-sm text-muted-foreground">
           by {currentArtwork?.artist || 'unknown'} • {currentArtwork?.year || '---'}
-        </CardDescription>
-        <CardDescription className="text-xs text-muted-foreground mt-0.5">
+        </p>
+        <p className="text-xs text-muted-foreground">
           {currentArtwork?.description || 'loading artwork...'}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="p-4 pt-0">
-        {console.log('🎨 Current artwork data:', currentArtwork)}
-        <SvgArtwork 
-          svgPath={currentArtwork?.svgPath} 
-          revealedPixels={revealedPixels}
-          title={currentArtwork?.title}
-        />
-      </CardContent>
-    </Card>
+        </p>
+      </div>
+      
+      <Card className="border-border bg-card shadow-sm rounded-2xl">
+        <CardContent className="p-4">
+          {console.log('🎨 Current artwork data:', currentArtwork)}
+          <SvgArtwork 
+            svgPath={currentArtwork?.svgPath} 
+            revealedPixels={revealedPixels}
+            title={currentArtwork?.title}
+          />
+        </CardContent>
+      </Card>
+    </div>
 
     <Card className="bg-muted/30 border-border/50 shadow-sm rounded-2xl">
       <CardContent className="p-4 text-center text-sm text-muted-foreground space-y-1">

@@ -101,6 +101,7 @@ const PixelQuestApp = () => {
           levelProgress={levelProgress}
           revealedPixels={revealedPixels}
           completedArtworks={completedArtworks}
+          artworkProgress={artworkProgress}
         />
         
         {/* Overlay for mobile */}
@@ -128,38 +129,41 @@ const PixelQuestApp = () => {
                     onInputKeyDown={handleInputKeyDown}
                   />
 
-                  <Card className="border-border bg-card shadow-sm rounded-2xl">
-                    <CardHeader className="pb-3 p-4 space-y-1">
-                      <CardTitle className="text-lg font-semibold text-foreground mb-0.5">
-                        active quests 
-                        <span className="ml-auto text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full ml-1">
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h2 className="text-lg font-semibold text-foreground mb-0">active quests</h2>
+                        <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">
                           {quests.length}
                         </span>
-                      </CardTitle>
-                      <CardDescription className="text-sm text-muted-foreground">
-                        complete quests to reveal artwork pixels
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                      <div className="space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
-                        {quests.length === 0 ? (
-                          <div className="text-center py-8 text-sm text-muted-foreground">
-                            <div className="text-2xl mb-2">🎯</div>
-                            no active quests. add one to start your adventure!
-                          </div>
-                        ) : (
-                          quests.map((quest) => (
-                            <QuestCard 
-                              key={quest.id} 
-                              quest={quest} 
-                              onComplete={handleCompleteQuest}
-                              onDelete={handleDeleteQuest}
-                            />
-                          ))
-                        )}
                       </div>
-                    </CardContent>
-                  </Card>
+                      <p className="text-sm text-muted-foreground">
+                        complete quests to reveal artwork pixels
+                      </p>
+                    </div>
+                    
+                    <Card className="border-border bg-card shadow-sm rounded-2xl">
+                      <CardContent className="p-4">
+                        <div className="space-y-3 max-h-96 overflow-y-auto custom-scrollbar">
+                          {quests.length === 0 ? (
+                            <div className="text-center py-8 text-sm text-muted-foreground">
+                              <div className="text-2xl mb-2">🎯</div>
+                              no active quests. add one to start your adventure!
+                            </div>
+                          ) : (
+                            quests.map((quest) => (
+                              <QuestCard 
+                                key={quest.id} 
+                                quest={quest} 
+                                onComplete={handleCompleteQuest}
+                                onDelete={handleDeleteQuest}
+                              />
+                            ))
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
 
                 {/* Artwork Panel */}
