@@ -10,12 +10,15 @@ const ArtworkPanel = ({ currentArtwork, revealedPixels }) => (
         <h2 className="text-xl font-semibold text-foreground leading-tight mb-0">
           {currentArtwork?.title || 'loading...'}
         </h2>
-        <p className="text-sm text-muted-foreground">
-          by {currentArtwork?.artist || 'unknown'} • {currentArtwork?.year || '---'}
-        </p>
-        <p className="text-xs text-muted-foreground">
-          {currentArtwork?.description || 'loading artwork...'}
-        </p>
+        <div className="text-sm text-muted-foreground flex items-center gap-1 flex-wrap">
+          <span className="artwork-prefix">by</span>
+          <span className="artwork-separator">·</span>
+          <span className="artwork-artist">{currentArtwork?.artist || 'unknown'}</span>
+          <span className="artwork-separator">·</span>
+          <span className="artwork-year">{currentArtwork?.year || '---'}</span>
+          <span className="artwork-separator">·</span>
+          <span className="artwork-description text-xs">{currentArtwork?.description || 'loading artwork...'}</span>
+        </div>
       </div>
       
       <Card className="border-border bg-card shadow-sm rounded-2xl">

@@ -93,7 +93,6 @@ const QuestForm = forwardRef(({
             className="w-full bg-gray-200 hover:bg-gray-300 transition-colors py-2 px-4 rounded-b-2xl flex items-center justify-center gap-2 text-sm text-gray-600"
           >
             <ChevronUp className="h-4 w-4" />
-            <ChevronUp className="h-4 w-4" />
             <span>collapse</span>
           </button>
         )}
