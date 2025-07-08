@@ -50,7 +50,7 @@ const QuestForm = forwardRef(({
       
       <div className="flex gap-3 items-center">
         <div className="flex-1">
-          <div className="flex rounded-lg border border-border bg-muted/30 p-0.5 h-10">
+          <div className="flex border-2 border-black bg-gray-200 p-1 h-10 pixel-group">
             {[
               { value: 'easy', stars: 1, xp: 25 },
               { value: 'medium', stars: 2, xp: 50 },
@@ -60,10 +60,10 @@ const QuestForm = forwardRef(({
                 key={difficulty.value}
                 type="button"
                 onClick={() => setNewQuestDifficulty(difficulty.value)}
-                className={`flex items-center gap-1 px-3 py-1.5 text-sm font-medium transition-all hover:scale-105 active:scale-95 ${
+                className={`flex items-center gap-1 px-3 py-1.5 text-sm font-medium transition-all border border-black hover:translate-x-[1px] hover:translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] ${
                   newQuestDifficulty === difficulty.value
-                    ? 'bg-primary text-primary-foreground shadow-sm rounded-md'
-                    : 'text-muted-foreground hover:bg-background/80 rounded-md'
+                    ? 'bg-primary text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                    : 'bg-white text-black hover:bg-gray-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none'
                 }`}
               >
                 <div className="flex">

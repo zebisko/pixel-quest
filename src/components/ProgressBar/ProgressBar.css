@@ -23,19 +23,51 @@
 .progress-bar-track {
   position: relative;
   width: 100%;
-  height: var(--progress-height, 8px);
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: var(--progress-radius, 4px);
+  height: var(--progress-height, 16px);
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
+}
+
+.progress-bar-track::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: black;
+}
+
+.progress-bar-track::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: black;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: var(--progress-radius, 4px);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0;
+  transition: width 0.3s ease;
   position: relative;
   overflow: hidden;
+  background: black !important;
+}
+
+.progress-bar-fill::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* Color variants */

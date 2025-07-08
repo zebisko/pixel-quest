@@ -132,8 +132,8 @@ const PixelQuestApp = () => {
                     <CardHeader className="pb-3 p-4 space-y-1">
                       <CardTitle className="text-lg font-semibold text-foreground mb-0.5">
                         active quests 
-                        <span className="font-light text-muted-foreground ml-2">
-                          ({quests.length})
+                        <span className="ml-auto text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full ml-1">
+                          {quests.length}
                         </span>
                       </CardTitle>
                       <CardDescription className="text-sm text-muted-foreground">
