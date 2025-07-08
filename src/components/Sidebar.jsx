@@ -22,10 +22,7 @@ const Sidebar = ({
   )}>
     {/* Header */}
     <header className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
-      <div>
-        <h1 className="text-xl font-medium tracking-tight text-foreground">pixel quest</h1>
-        <p className="text-xs text-muted-foreground mt-0.5">complete quests to reveal art</p>
-      </div>
+      <h1 className="font-medium tracking-tight text-foreground" style={{fontSize: '2.5em', lineHeight: '2.5rem'}}>pixel quest</h1>
       <Button
         variant="ghost"
         size="icon"
@@ -39,7 +36,7 @@ const Sidebar = ({
     
     {/* Navigation */}
     <nav className="p-3 flex-shrink-0" role="navigation" aria-label="Main navigation">
-      <div className="space-y-1">
+      <div className="space-y-2">
         <Button
           variant={currentView === 'dashboard' ? 'default' : 'ghost'}
           className="w-full justify-start h-9 font-normal text-sm transition-colors"
