@@ -117,7 +117,7 @@ const PixelQuestApp = () => {
             {currentView === 'dashboard' ? (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 {/* Quest Panel */}
-                <div className="space-y-6">
+                <div className="space-y-4">
                   <QuestForm
                     ref={inputRef}
                     newQuestTitle={newQuestTitle}
@@ -129,7 +129,7 @@ const PixelQuestApp = () => {
                   />
 
                   <Card className="border-border bg-card shadow-sm rounded-2xl">
-                    <CardHeader className="pb-3 p-4">
+                    <CardHeader className="pb-3 p-4 space-y-1">
                       <CardTitle className="text-lg font-semibold text-foreground mb-0.5">
                         active quests 
                         <span className="font-light text-muted-foreground ml-2">
