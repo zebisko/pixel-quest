@@ -32,14 +32,6 @@ const ArtworkPanel = ({ currentArtwork, revealedPixels }) => (
         </CardContent>
       </Card>
     </div>
-
-    <Card className="bg-muted/30 border-border/50 shadow-sm rounded-2xl">
-      <CardContent className="p-4 text-center text-sm text-muted-foreground space-y-1">
-        <p>🎯 complete quests to reveal artwork pixels</p>
-        <p>⭐ higher difficulty = more xp = more pixels revealed</p>
-        <p className="font-medium">🎨 discovering: {currentArtwork?.title || 'loading...'}</p>
-      </CardContent>
-    </Card>
   </div>
 );
 

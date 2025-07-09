@@ -102,6 +102,7 @@ const PixelQuestApp = () => {
           revealedPixels={revealedPixels}
           completedArtworks={completedArtworks}
           artworkProgress={artworkProgress}
+          currentArtwork={currentArtwork}
         />
         
         {/* Overlay for mobile */}

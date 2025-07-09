@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Home, Image, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -14,8 +14,12 @@ const Sidebar = ({
   levelProgress, 
   revealedPixels, 
   completedArtworks,
-  artworkProgress 
-}) => (
+  artworkProgress,
+  currentArtwork 
+}) => {
+  const [showHelp, setShowHelp] = useState(true);
+
+  return (
   <aside className={cn(
     "fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-border transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 h-screen flex flex-col",
     isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -66,6 +70,26 @@ const Sidebar = ({
       </div>
     </nav>
     
+    {/* Help Section */}
+    {showHelp && (
+      <div className="p-3 border-t border-border">
+        <div className="border border-border bg-muted/30 rounded-xl p-3 relative">
+          <button
+            onClick={() => setShowHelp(false)}
+            className="absolute top-2 right-2 p-1 hover:bg-muted rounded-md transition-colors"
+            aria-label="Dismiss help"
+          >
+            <X className="h-3 w-3 text-muted-foreground" />
+          </button>
+          <div className="text-xs text-muted-foreground space-y-1 pr-6">
+            <p>🎯 complete quests to reveal artwork pixels</p>
+            <p>⭐ higher difficulty = more xp = more pixels revealed</p>
+            <p className="font-medium">🎨 discovering: {currentArtwork?.title || 'loading...'}</p>
+          </div>
+        </div>
+      </div>
+    )}
+
     {/* Progress Summary - Sticky at bottom */}
     <div className="p-3 border-t border-border mt-auto flex-shrink-0">
       <div className="space-y-4">
@@ -92,6 +116,7 @@ const Sidebar = ({
       </div>
     </div>
   </aside>
-);
+  );
+};
 
 export default Sidebar;
