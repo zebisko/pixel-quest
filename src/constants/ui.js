@@ -154,11 +154,11 @@ export const CONSOLE_MESSAGES = {
 
 export const BUTTON_GROUP = {
   // Container styling for button groups
-  CONTAINER: 'flex border border-border bg-background',
+  CONTAINER: 'flex border border-border bg-background min-w-fit',
   HEIGHT: 'h-10', // Same height as add quest button
   
   // Button states following Clean Code principles
-  BASE: 'flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm font-medium transition-all border-0 bg-transparent',
+  BASE: 'flex items-center justify-center gap-1 px-4 py-2 text-sm font-medium transition-all border-0 bg-transparent whitespace-nowrap',
   HOVER: 'hover:bg-gray-100',
   SELECTED: 'bg-primary text-white',
   NOT_SELECTED: 'text-foreground',
