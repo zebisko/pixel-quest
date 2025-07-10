@@ -27,6 +27,9 @@ export const BORDER_RADIUS = {
   MEDIUM: 'rounded-xl',
   LARGE: 'rounded-2xl',
   FULL: 'rounded-full',
+  // Specific border radius utilities for Clean Code
+  BOTTOM_ONLY_LARGE: 'rounded-b-2xl', // Only bottom corners rounded
+  TOP_ONLY_LARGE: 'rounded-t-2xl', // Only top corners rounded
 };
 
 export const TYPOGRAPHY = {

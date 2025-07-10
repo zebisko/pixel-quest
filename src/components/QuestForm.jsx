@@ -97,7 +97,7 @@ const QuestForm = forwardRef(({
         {isExpanded && (
           <button
             onClick={handleToggleExpansion}
-            className={`w-full bg-gray-200 hover:bg-gray-300 transition-colors py-2 px-4 ${BORDER_RADIUS.LARGE} flex items-center justify-center gap-2 text-sm text-gray-600`}
+            className={`w-full bg-gray-200 hover:bg-gray-300 transition-colors py-2 px-4 ${BORDER_RADIUS.BOTTOM_ONLY_LARGE} flex items-center justify-center gap-2 text-sm text-gray-600`}
           >
             <ChevronUp className="h-4 w-4" />
             <span>{QUEST_FORM_MESSAGES.COLLAPSE}</span>
