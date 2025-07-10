@@ -34,7 +34,13 @@ const QuestForm = forwardRef(({
                 onChange={(e) => setNewQuestTitle(e.target.value)}
                 onKeyDown={onInputKeyDown}
                 placeholder="what quest shall you embark on?"
-                className="h-10 text-sm border-border placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20 transition-all rounded-full"
+                className="border-border placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20 transition-all"
+                style={{
+                  borderRadius: '6px',
+                  fontSize: '20px',
+                  height: 'auto',
+                  padding: '12px 16px'
+                }}
               />
             </div>
             
