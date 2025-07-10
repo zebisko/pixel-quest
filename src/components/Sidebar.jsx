@@ -10,6 +10,7 @@ import {
   TYPOGRAPHY, 
   ANIMATIONS, 
   Z_INDEX, 
+  POSITIONING, 
   SIDEBAR_LABELS, 
   ARIA_LABELS 
 } from '../constants/ui.js';
@@ -50,11 +51,19 @@ const Sidebar = ({
 
   const getSidebarClasses = () => {
     return cn(
-      "fixed inset-y-0 left-0 bg-white border-r border-border transition-all ease-in-out lg:translate-x-0 lg:sticky lg:top-0 min-h-screen lg:h-screen flex flex-col",
-      `${Z_INDEX.SIDEBAR} lg:${Z_INDEX.SIDEBAR_DESKTOP}`,
+      // Base positioning - always fixed for consistent behavior
+      POSITIONING.SIDEBAR_FIXED,
+      "bg-white border-r border-border transition-all ease-in-out flex flex-col",
+      // Z-index management for proper layering
+      `lg:${Z_INDEX.SIDEBAR_DESKTOP} ${Z_INDEX.SIDEBAR_MOBILE}`,
+      // Animation classes
       `${ANIMATIONS.TRANSITION_DURATION} ${ANIMATIONS.TRANSITION_EASE}`,
+      // Width management
       isSidebarCollapsed ? LAYOUT.SIDEBAR_WIDTH_COLLAPSED : LAYOUT.SIDEBAR_WIDTH_EXPANDED,
-      isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+      // Mobile visibility
+      isSidebarOpen ? "translate-x-0" : "-translate-x-full",
+      // Desktop visibility
+      "lg:translate-x-0"
     );
   };
 

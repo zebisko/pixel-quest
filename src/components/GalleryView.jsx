@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
-import { Check, X } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ARTWORKS } from '../constants/game.js';
 import { useArtworkModal } from '../hooks/useArtworkModal.js';
+import Modal from './Modal.jsx';
+import { BORDER_RADIUS, SPACING } from '../constants/ui.js';
 
 const ArtworkCard = React.memo(({ artwork, isLocked, isCollected, onSelect }) => (
   <Card 
@@ -209,36 +211,26 @@ const GalleryView = React.memo(({ level, xp, completedArtworks, setCurrentView }
         </Card>
       )}
 
-      {/* Artwork Detail Modal */}
-      {selectedArtwork && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
-          onClick={closeModal}
-        >
-          <Card 
-            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-card shadow-2xl animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <CardHeader className="text-center relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={closeModal}
-                className="absolute top-2 right-2"
-                aria-label="Close modal"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-              <CardTitle className="text-2xl pr-10 text-foreground">{selectedArtwork.title}</CardTitle>
+      {/* Artwork Detail Modal using Clean Code Modal component */}
+      <Modal 
+        isOpen={!!selectedArtwork} 
+        onClose={closeModal}
+        showCloseButton={true}
+        closeOnOverlayClick={true}
+      >
+        {selectedArtwork && (
+          <>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl text-foreground pr-8">{selectedArtwork.title}</CardTitle>
               <CardDescription className="text-base text-muted-foreground">
                 by {selectedArtwork.artist} • {selectedArtwork.year} • {selectedArtwork.period}
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className={SPACING.CARD_PADDING}>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Artwork Image */}
                 <div className="space-y-4">
-                  <div className="aspect-[3/2] border border-border rounded-lg overflow-hidden bg-background">
+                  <div className={`aspect-[3/2] border border-border ${BORDER_RADIUS.MEDIUM} overflow-hidden bg-background`}>
                     <img
                       src={selectedArtwork.svgPath}
                       alt={selectedArtwork.title}
@@ -288,9 +280,9 @@ const GalleryView = React.memo(({ level, xp, completedArtworks, setCurrentView }
                 </div>
               </div>
             </CardContent>
-          </Card>
-        </div>
-      )}
+          </>
+        )}
+      </Modal>
     </div>
   );
 });

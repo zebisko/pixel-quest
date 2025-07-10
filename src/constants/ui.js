@@ -4,6 +4,8 @@
 export const LAYOUT = {
   SIDEBAR_WIDTH_EXPANDED: 'w-80', // 320px
   SIDEBAR_WIDTH_COLLAPSED: 'w-16', // 64px
+  SIDEBAR_MARGIN_EXPANDED: 'ml-80', // 320px margin for main content
+  SIDEBAR_MARGIN_COLLAPSED: 'ml-16', // 64px margin for main content
   MOBILE_HEADER_HEIGHT: 'h-8',
   BUTTON_HEIGHT: 'h-8',
   PROGRESS_BAR_HEIGHT: 'h-2',
@@ -44,11 +46,30 @@ export const ANIMATIONS = {
 };
 
 export const Z_INDEX = {
-  MODAL: 'z-50',
+  // Base layer (lowest)
+  BASE: 'z-0',
+  SIDEBAR_DESKTOP: 'z-10',
   MOBILE_HEADER: 'z-30',
-  OVERLAY: 'z-40',
-  SIDEBAR: 'z-50',
-  SIDEBAR_DESKTOP: 'z-0',
+  MOBILE_OVERLAY: 'z-40',
+  SIDEBAR_MOBILE: 'z-50',
+  
+  // Modal layers (highest)
+  MODAL_OVERLAY: 'z-[100]',
+  MODAL_CONTENT: 'z-[101]',
+};
+
+export const POSITIONING = {
+  // Fixed positioning utilities
+  FIXED_FULL_SCREEN: 'fixed inset-0',
+  FIXED_VIEWPORT: 'fixed top-0 left-0 w-screen h-screen',
+  FIXED_SIDEBAR: 'fixed inset-y-0 left-0',
+  
+  // Layout positioning
+  SIDEBAR_FIXED: 'fixed inset-y-0 left-0 h-screen',
+  SIDEBAR_MOBILE: 'fixed inset-y-0 left-0 h-screen',
+  
+  // Center positioning
+  CENTER_MODAL: 'flex items-center justify-center min-h-screen',
 };
 
 export const DIFFICULTY_LEVELS = [

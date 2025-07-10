@@ -14,6 +14,7 @@ import {
   ANIMATIONS, 
   BORDER_RADIUS,
   SPACING,
+  POSITIONING,
   SIDEBAR_LABELS
 } from './constants/ui.js';
 import Sidebar from './components/Sidebar.jsx';
@@ -109,8 +110,8 @@ const PixelQuestApp = () => {
         <div className="w-8" /> {/* Spacer */}
       </header>
 
-      <div className="flex">
-        <Sidebar 
+      {/* Fixed Sidebar */}
+      <Sidebar 
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
           isSidebarCollapsed={isSidebarCollapsed}
@@ -124,17 +125,22 @@ const PixelQuestApp = () => {
           artworkProgress={artworkProgress}
           currentArtwork={currentArtwork}
         />
-        
-        {/* Overlay for mobile */}
-        {isSidebarOpen && (
-          <div 
-            className={`fixed inset-0 bg-black/20 ${Z_INDEX.OVERLAY} lg:hidden backdrop-blur-sm`}
-            onClick={() => setIsSidebarOpen(false)}
-          />
-        )}
+      
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className={`${POSITIONING.FIXED_FULL_SCREEN} bg-black/20 ${Z_INDEX.MOBILE_OVERLAY} lg:hidden backdrop-blur-sm`}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6 animate-fade-in">
+      {/* Main Content with proper margin for fixed sidebar */}
+      <main className={cn(
+        "p-4 lg:p-6 transition-all duration-300 ease-in-out",
+        ANIMATIONS.FADE_IN,
+        // Account for fixed sidebar width using Clean Code constants
+        isSidebarCollapsed ? `lg:${LAYOUT.SIDEBAR_MARGIN_COLLAPSED}` : `lg:${LAYOUT.SIDEBAR_MARGIN_EXPANDED}`
+      )}>
           <div className="max-w-7xl mx-auto">
             {currentView === APP_CONSTANTS.VIEWS.DASHBOARD ? (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
@@ -203,16 +209,15 @@ const PixelQuestApp = () => {
             )}
           </div>
         </main>
-      </div>
 
       {/* Level Up Modal */}
       {showLevelUp && (
         <div 
-          className={`fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center ${Z_INDEX.MODAL} p-4 ${ANIMATIONS.FADE_IN}`}
+          className={`${POSITIONING.FIXED_VIEWPORT} bg-black/60 backdrop-blur-sm ${POSITIONING.CENTER_MODAL} ${Z_INDEX.MODAL_OVERLAY} p-4 ${ANIMATIONS.FADE_IN}`}
           onClick={handleCloseLevelUpModal}
         >
           <Card 
-            className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-card shadow-2xl ${ANIMATIONS.SCALE_IN}`}
+            className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-card shadow-2xl ${ANIMATIONS.SCALE_IN} ${Z_INDEX.MODAL_CONTENT}`}
             onClick={(e) => e.stopPropagation()}
           >
             <CardContent className="p-8">
