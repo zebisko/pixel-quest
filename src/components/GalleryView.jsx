@@ -77,7 +77,7 @@ const ArtworkCard = React.memo(({ artwork, isLocked, isCollected, onSelect }) =>
       <div className="flex items-center justify-between">
         <span className={cn(
           "text-xs px-2 py-1 rounded-full",
-          isLocked ? "bg-muted text-muted-foreground" : "bg-secondary"
+          isLocked ? "bg-muted text-muted-foreground" : "bg-secondary text-white"
         )}>
           {isLocked ? '🔒 locked' : artwork.period}
         </span>
