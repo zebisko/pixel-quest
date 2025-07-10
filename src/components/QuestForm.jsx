@@ -3,7 +3,15 @@ import { Plus, Star, ChevronUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DIFFICULTY_LEVELS, INPUT_STYLES, QUEST_FORM_MESSAGES, BORDER_RADIUS, SPACING } from '../constants/ui.js';
+import { cn } from '@/lib/utils';
+import { 
+  DIFFICULTY_LEVELS, 
+  INPUT_STYLES, 
+  QUEST_FORM_MESSAGES, 
+  BORDER_RADIUS, 
+  SPACING, 
+  BUTTON_GROUP 
+} from '../constants/ui.js';
 
 const QuestForm = forwardRef(({ 
   newQuestTitle, 
@@ -18,6 +26,24 @@ const QuestForm = forwardRef(({
   const handleToggleExpansion = () => setIsExpanded(!isExpanded);
   
   const isQuestTitleValid = newQuestTitle.trim().length > 0;
+
+  // Helper function to get button styling following Clean Code principles
+  const getDifficultyButtonClasses = (difficulty, index) => {
+    const isSelected = newQuestDifficulty === difficulty.value;
+    const isFirst = index === 0;
+    const isLast = index === DIFFICULTY_LEVELS.length - 1;
+    
+    let borderRadius = BORDER_RADIUS.NONE;
+    if (isFirst) borderRadius = BORDER_RADIUS.LEFT_ONLY;
+    if (isLast) borderRadius = BORDER_RADIUS.RIGHT_ONLY;
+    
+    return cn(
+      BUTTON_GROUP.BASE,
+      BUTTON_GROUP.HOVER,
+      borderRadius,
+      isSelected ? BUTTON_GROUP.SELECTED : BUTTON_GROUP.NOT_SELECTED
+    );
+  };
 
   return (
     <div className="space-y-3">
@@ -50,17 +76,18 @@ const QuestForm = forwardRef(({
             </div>
             
             <div className="flex justify-between items-center">
-              <div className={`flex ${SPACING.SMALL_GAP}`}>
-                {DIFFICULTY_LEVELS.map((difficulty) => (
+              <div className={cn(
+                BUTTON_GROUP.CONTAINER,
+                BUTTON_GROUP.HEIGHT,
+                SPACING.BUTTON_GROUP_PADDING,
+                BORDER_RADIUS.SMALL
+              )}>
+                {DIFFICULTY_LEVELS.map((difficulty, index) => (
                   <button
                     key={difficulty.value}
                     type="button"
                     onClick={() => setNewQuestDifficulty(difficulty.value)}
-                    className={`flex items-center justify-center gap-1 h-10 px-4 py-2 text-sm font-medium transition-all border border-black rounded-full hover:translate-x-[1px] hover:translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] ${
-                      newQuestDifficulty === difficulty.value
-                        ? 'bg-primary text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
-                        : 'bg-white text-black hover:bg-gray-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none'
-                    }`}
+                    className={getDifficultyButtonClasses(difficulty, index)}
                   >
                     <div className="flex">
                       {Array.from({ length: difficulty.stars }).map((_, i) => (

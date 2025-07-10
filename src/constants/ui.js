@@ -22,6 +22,7 @@ export const SPACING = {
   LARGE_GAP: 'gap-3',
   // Specific padding utilities for consistent spacing
   LEFT_PADDING_SMALL: 'pl-3', // 12px left padding
+  BUTTON_GROUP_PADDING: 'p-1', // 4px padding for button groups
 };
 
 export const BORDER_RADIUS = {
@@ -32,6 +33,10 @@ export const BORDER_RADIUS = {
   // Specific border radius utilities for Clean Code
   BOTTOM_ONLY_LARGE: 'rounded-b-2xl', // Only bottom corners rounded
   TOP_ONLY_LARGE: 'rounded-t-2xl', // Only top corners rounded
+  // Button group utilities
+  LEFT_ONLY: 'rounded-l-md', // Only left corners rounded
+  RIGHT_ONLY: 'rounded-r-md', // Only right corners rounded
+  NONE: 'rounded-none', // No border radius
 };
 
 export const TYPOGRAPHY = {
@@ -121,7 +126,7 @@ export const ARIA_LABELS = {
 };
 
 export const APP_CONSTANTS = {
-  DEFAULT_DIFFICULTY: 'medium',
+  DEFAULT_DIFFICULTY: 'easy',
   DEFAULT_VIEW: 'dashboard',
   INPUT_FOCUS_DELAY: 0,
   VIEWS: {
@@ -145,4 +150,16 @@ export const APP_CONSTANTS = {
 export const CONSOLE_MESSAGES = {
   ADDING_QUEST: '➕ Adding new quest:',
   COMPLETING_QUEST: '🎯 Completing quest:',
+};
+
+export const BUTTON_GROUP = {
+  // Container styling for button groups
+  CONTAINER: 'flex border border-border bg-background',
+  HEIGHT: 'h-10', // Same height as add quest button
+  
+  // Button states following Clean Code principles
+  BASE: 'flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm font-medium transition-all border-0 bg-transparent',
+  HOVER: 'hover:bg-gray-100',
+  SELECTED: 'bg-primary text-white',
+  NOT_SELECTED: 'text-foreground',
 };
