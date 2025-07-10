@@ -157,7 +157,7 @@ const PixelQuestApp = () => {
                   />
 
                   <div className="space-y-3">
-                    <div>
+                    <div className={SPACING.LEFT_PADDING_SMALL}>
                       <div className="flex items-center gap-2">
                         <h2 className="text-lg font-semibold text-foreground mb-0">active quests</h2>
                         <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">

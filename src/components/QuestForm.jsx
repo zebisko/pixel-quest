@@ -21,7 +21,7 @@ const QuestForm = forwardRef(({
 
   return (
     <div className="space-y-3">
-      <div>
+      <div className={SPACING.LEFT_PADDING_SMALL}>
         <h2 className="text-lg font-semibold text-foreground mb-0">{QUEST_FORM_MESSAGES.TITLE}</h2>
         <p className="text-sm text-muted-foreground">
           {QUEST_FORM_MESSAGES.DESCRIPTION}

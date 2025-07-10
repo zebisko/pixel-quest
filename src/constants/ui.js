@@ -20,6 +20,8 @@ export const SPACING = {
   SMALL_GAP: 'gap-1',
   MEDIUM_GAP: 'gap-2',
   LARGE_GAP: 'gap-3',
+  // Specific padding utilities for consistent spacing
+  LEFT_PADDING_SMALL: 'pl-3', // 12px left padding
 };
 
 export const BORDER_RADIUS = {

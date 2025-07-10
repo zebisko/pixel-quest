@@ -2,11 +2,12 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import SvgArtwork from './SvgArtwork.jsx';
+import { SPACING } from '../constants/ui.js';
 
 const ArtworkPanel = ({ currentArtwork, revealedPixels }) => (
   <div className="space-y-6">
     <div className="space-y-3">
-      <div>
+      <div className={SPACING.LEFT_PADDING_SMALL}>
         <h2 className="text-lg font-semibold text-foreground mb-0">
           {currentArtwork?.title || 'loading...'}
         </h2>
