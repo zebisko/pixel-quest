@@ -34,6 +34,7 @@ const PixelQuestApp = () => {
   const [newQuestDifficulty, setNewQuestDifficulty] = useState('medium');
   const [currentView, setCurrentView] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const inputRef = useRef(null);
 
 
@@ -94,6 +95,8 @@ const PixelQuestApp = () => {
         <Sidebar 
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          isSidebarCollapsed={isSidebarCollapsed}
+          setIsSidebarCollapsed={setIsSidebarCollapsed}
           currentView={currentView}
           setCurrentView={setCurrentView}
           level={level}
