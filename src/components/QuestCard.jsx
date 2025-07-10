@@ -32,7 +32,7 @@ const QuestCard = React.memo(({ quest, onComplete, onDelete }) => {
               {quest.title}
             </h4>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground font-medium">
+              <span className="text-xs text-muted-foreground font-medium" style={{ marginTop: '0' }}>
                 +{quest.xp} xp
               </span>
               <div className="flex items-center gap-0.5">
