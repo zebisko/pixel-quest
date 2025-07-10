@@ -40,7 +40,7 @@ const SvgArtwork = ({ svgPath, revealedPixels = [], title = "Artwork" }) => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
       // Create an image from the SVG
-      const img = new Image();
+      const img = new window.Image();
       img.crossOrigin = 'anonymous';
       
       img.onload = () => {

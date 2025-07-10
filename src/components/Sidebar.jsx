@@ -3,6 +3,16 @@ import { Home, Image, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
+import { 
+  LAYOUT, 
+  SPACING, 
+  BORDER_RADIUS, 
+  TYPOGRAPHY, 
+  ANIMATIONS, 
+  Z_INDEX, 
+  SIDEBAR_LABELS, 
+  ARIA_LABELS 
+} from '../constants/ui.js';
 
 const Sidebar = ({ 
   isSidebarOpen, 
@@ -14,40 +24,82 @@ const Sidebar = ({
   level, 
   xp, 
   levelProgress, 
-  revealedPixels, 
   completedArtworks,
   artworkProgress,
   currentArtwork 
 }) => {
   const [showHelp, setShowHelp] = useState(true);
 
+  // Helper functions following Clean Code principles
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+    setIsSidebarOpen(false);
+  };
+
+  const handleToggleCollapse = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const handleDismissHelp = () => {
+    setShowHelp(false);
+  };
+
+  const getSidebarClasses = () => {
+    return cn(
+      "fixed inset-y-0 left-0 bg-white border-r border-border transition-all ease-in-out lg:translate-x-0 lg:sticky lg:top-0 min-h-screen lg:h-screen flex flex-col",
+      `${Z_INDEX.SIDEBAR} lg:${Z_INDEX.SIDEBAR_DESKTOP}`,
+      `${ANIMATIONS.TRANSITION_DURATION} ${ANIMATIONS.TRANSITION_EASE}`,
+      isSidebarCollapsed ? LAYOUT.SIDEBAR_WIDTH_COLLAPSED : LAYOUT.SIDEBAR_WIDTH_EXPANDED,
+      isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+    );
+  };
+
+  const getNavButtonClasses = () => {
+    return cn(
+      `w-full ${LAYOUT.QUEST_CARD_HEIGHT} font-normal text-sm transition-colors`,
+      isSidebarCollapsed ? "justify-center px-2" : "justify-start"
+    );
+  };
+
+  const getIconClasses = () => {
+    return cn("h-4 w-4", !isSidebarCollapsed && "mr-3");
+  };
+
   return (
-  <aside className={cn(
-    "fixed inset-y-0 left-0 z-50 bg-white border-r border-border transition-all duration-300 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:z-0 min-h-screen lg:h-screen flex flex-col",
-    isSidebarCollapsed ? "w-16" : "w-80",
-    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-  )}>
+  <aside className={getSidebarClasses()}>
     {/* Header */}
-    <header className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
+    <header className={`flex items-center justify-between border-b border-border flex-shrink-0 ${SPACING.HEADER_PADDING}`}>
       {!isSidebarCollapsed && (
-        <h1 className="font-medium tracking-tight text-foreground" style={{fontSize: '2.5em', lineHeight: '2.5rem'}}>pixel quest</h1>
+        <h1 
+          className="font-medium tracking-tight text-foreground" 
+          style={{
+            fontSize: TYPOGRAPHY.TITLE_FONT_SIZE, 
+            lineHeight: TYPOGRAPHY.TITLE_LINE_HEIGHT
+          }}
+        >
+          pixel quest
+        </h1>
       )}
-      <div className="flex items-center gap-2">
+      <div className={`flex items-center ${SPACING.MEDIUM_GAP}`}>
         <Button
           variant="ghost"
           size="icon"
-          className="hidden lg:flex h-8 w-8"
-          onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          className={`hidden lg:flex ${LAYOUT.BUTTON_HEIGHT} w-8`}
+          onClick={handleToggleCollapse}
+          aria-label={isSidebarCollapsed ? ARIA_LABELS.EXPAND_SIDEBAR : ARIA_LABELS.COLLAPSE_SIDEBAR}
         >
           {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden h-8 w-8"
-          onClick={() => setIsSidebarOpen(false)}
-          aria-label="Close sidebar"
+          className={`lg:hidden ${LAYOUT.BUTTON_HEIGHT} w-8`}
+          onClick={handleCloseSidebar}
+          aria-label={ARIA_LABELS.CLOSE_SIDEBAR}
         >
           <X className="h-4 w-4" />
         </Button>
@@ -55,39 +107,27 @@ const Sidebar = ({
     </header>
     
     {/* Navigation */}
-    <nav className="p-3 flex-shrink-0" role="navigation" aria-label="Main navigation">
+    <nav className={`${SPACING.CONTENT_PADDING} flex-shrink-0`} role="navigation" aria-label="Main navigation">
       <div className="space-y-2">
         <Button
           variant={currentView === 'dashboard' ? 'default' : 'ghost'}
-          className={cn(
-            "w-full h-9 font-normal text-sm transition-colors",
-            isSidebarCollapsed ? "justify-center px-2" : "justify-start"
-          )}
-          onClick={() => {
-            setCurrentView('dashboard');
-            setIsSidebarOpen(false);
-          }}
+          className={getNavButtonClasses()}
+          onClick={() => handleViewChange('dashboard')}
         >
-          <Home className={cn("h-4 w-4", !isSidebarCollapsed && "mr-3")} />
-          {!isSidebarCollapsed && "dashboard"}
+          <Home className={getIconClasses()} />
+          {!isSidebarCollapsed && SIDEBAR_LABELS.DASHBOARD}
         </Button>
         
         <Button
           variant={currentView === 'gallery' ? 'default' : 'ghost'}
-          className={cn(
-            "w-full h-9 font-normal text-sm transition-colors",
-            isSidebarCollapsed ? "justify-center px-2" : "justify-start"
-          )}
-          onClick={() => {
-            setCurrentView('gallery');
-            setIsSidebarOpen(false);
-          }}
+          className={getNavButtonClasses()}
+          onClick={() => handleViewChange('gallery')}
         >
-          <Image className={cn("h-4 w-4", !isSidebarCollapsed && "mr-3")} />
+          <Image className={getIconClasses()} />
           {!isSidebarCollapsed && (
             <>
-              gallery 
-              <span className="ml-auto text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">
+              {SIDEBAR_LABELS.GALLERY}
+              <span className={`ml-auto ${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground bg-muted px-1.5 py-0.5 ${BORDER_RADIUS.FULL}`}>
                 {completedArtworks.length}
               </span>
             </>
@@ -98,16 +138,16 @@ const Sidebar = ({
     
     {/* Help Section */}
     {showHelp && !isSidebarCollapsed && (
-      <div className="p-3 border-t border-border">
-        <div className="border border-border bg-muted/30 rounded-xl p-3 relative">
+      <div className={`${SPACING.CONTENT_PADDING} border-t border-border`}>
+        <div className={`border border-border bg-muted/30 ${BORDER_RADIUS.MEDIUM} ${SPACING.CONTENT_PADDING} relative`}>
           <button
-            onClick={() => setShowHelp(false)}
-            className="absolute top-2 right-2 p-1 hover:bg-muted rounded-md transition-colors"
-            aria-label="Dismiss help"
+            onClick={handleDismissHelp}
+            className={`absolute top-2 right-2 p-1 hover:bg-muted ${BORDER_RADIUS.SMALL} transition-colors`}
+            aria-label={ARIA_LABELS.DISMISS_HELP}
           >
             <X className="h-3 w-3 text-muted-foreground" />
           </button>
-          <div className="text-xs text-muted-foreground space-y-1 pr-3">
+          <div className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground space-y-1 pr-3`}>
             <p>🎯 complete quests to reveal artwork pixels</p>
             <p>⭐ higher difficulty = more xp = more pixels revealed</p>
             <p className="font-medium">🎨 discovering: {currentArtwork?.title || 'loading...'}</p>
@@ -117,32 +157,36 @@ const Sidebar = ({
     )}
 
     {/* Progress Summary - Sticky at bottom */}
-    <div className="p-3 border-t border-border mt-auto flex-shrink-0">
+    <div className={`${SPACING.CONTENT_PADDING} border-t border-border mt-auto flex-shrink-0`}>
       {isSidebarCollapsed ? (
-        <div className="space-y-3 text-center">
-          <div className="text-xs font-medium text-foreground">{level}</div>
-          <div className="text-xs text-muted-foreground">{completedArtworks.length}</div>
+        <div className={`space-y-3 text-center`}>
+          <div className={`${TYPOGRAPHY.SMALL_TEXT} font-medium text-foreground`}>{level}</div>
+          <div className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground`}>{completedArtworks.length}</div>
         </div>
       ) : (
         <div className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-medium text-foreground">level {level}</span>
-              <span className="text-xs text-muted-foreground">{xp} xp</span>
+              <span className={`${TYPOGRAPHY.SMALL_TEXT} font-medium text-foreground`}>
+                {SIDEBAR_LABELS.LEVEL_PREFIX}{level}
+              </span>
+              <span className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground`}>
+                {xp}{SIDEBAR_LABELS.XP_SUFFIX}
+              </span>
             </div>
-            <Progress value={levelProgress.percentage} className="h-2" />
-            <p className="text-xs text-muted-foreground mt-1.5">
-              {levelProgress.current} / {levelProgress.total} xp to next level
+            <Progress value={levelProgress.percentage} className={LAYOUT.PROGRESS_BAR_HEIGHT} />
+            <p className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground mt-1.5`}>
+              {levelProgress.current} / {levelProgress.total}{SIDEBAR_LABELS.XP_TO_NEXT_LEVEL}
             </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              {artworkProgress?.current || 0} / {artworkProgress?.total || 0} pixels revealed
+            <p className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground mt-1`}>
+              {artworkProgress?.current || 0} / {artworkProgress?.total || 0}{SIDEBAR_LABELS.PIXELS_REVEALED}
             </p>
           </div>
           
           <div className="pt-2 border-t border-border">
             <div className="text-center">
-              <div className="font-medium text-foreground text-sm">{completedArtworks.length}</div>
-              <div className="text-xs text-muted-foreground">artworks collected</div>
+              <div className={`font-medium text-foreground ${TYPOGRAPHY.MEDIUM_TEXT}`}>{completedArtworks.length}</div>
+              <div className={`${TYPOGRAPHY.SMALL_TEXT} text-muted-foreground`}>{SIDEBAR_LABELS.ARTWORKS_COLLECTED}</div>
             </div>
           </div>
         </div>

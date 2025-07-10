@@ -5,6 +5,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ARTWORKS } from './constants/game.js';
+import { 
+  APP_CONSTANTS, 
+  CONSOLE_MESSAGES, 
+  ARIA_LABELS, 
+  Z_INDEX, 
+  LAYOUT, 
+  ANIMATIONS, 
+  BORDER_RADIUS,
+  SPACING,
+  SIDEBAR_LABELS
+} from './constants/ui.js';
 import Sidebar from './components/Sidebar.jsx';
 import QuestCard from './components/QuestCard.jsx';
 import QuestForm from './components/QuestForm.jsx';
@@ -14,7 +25,6 @@ import GalleryView from './components/GalleryView.jsx';
 const PixelQuestApp = () => {
   const {
     quests,
-    completedQuests,
     level,
     xp,
     currentArtwork,
@@ -22,7 +32,6 @@ const PixelQuestApp = () => {
     addQuest,
     completeQuest,
     deleteQuest,
-    difficultyLevels,
     levelProgress,
     artworkProgress,
     completedArtworks,
@@ -31,24 +40,26 @@ const PixelQuestApp = () => {
   } = useGame();
 
   const [newQuestTitle, setNewQuestTitle] = useState('');
-  const [newQuestDifficulty, setNewQuestDifficulty] = useState('medium');
-  const [currentView, setCurrentView] = useState('dashboard');
+  const [newQuestDifficulty, setNewQuestDifficulty] = useState(APP_CONSTANTS.DEFAULT_DIFFICULTY);
+  const [currentView, setCurrentView] = useState(APP_CONSTANTS.DEFAULT_VIEW);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const inputRef = useRef(null);
 
 
-  // Add quest
-  const addNewQuest = useCallback(() => {
-    if (!newQuestTitle.trim()) return;
+  // Quest management functions following Clean Code principles
+  const isValidQuestTitle = (title) => title.trim().length > 0;
 
-    console.log('➕ Adding new quest:', { title: newQuestTitle, difficulty: newQuestDifficulty });
+  const addNewQuest = useCallback(() => {
+    if (!isValidQuestTitle(newQuestTitle)) return;
+
+    console.log(CONSOLE_MESSAGES.ADDING_QUEST, { title: newQuestTitle, difficulty: newQuestDifficulty });
     addQuest(newQuestTitle.trim(), newQuestDifficulty);
     setNewQuestTitle('');
     
     setTimeout(() => {
       inputRef.current?.focus();
-    }, 0);
+    }, APP_CONSTANTS.INPUT_FOCUS_DELAY);
   }, [newQuestTitle, newQuestDifficulty, addQuest]);
 
   useEffect(() => {
@@ -62,9 +73,8 @@ const PixelQuestApp = () => {
     }
   }, [addNewQuest]);
 
-  // Quest actions
   const handleCompleteQuest = useCallback((questId) => {
-    console.log('🎯 Completing quest:', questId);
+    console.log(CONSOLE_MESSAGES.COMPLETING_QUEST, questId);
     completeQuest(questId);
   }, [completeQuest]);
 
@@ -72,22 +82,30 @@ const PixelQuestApp = () => {
     deleteQuest(questId);
   }, [deleteQuest]);
 
+  // UI state management
+  const handleOpenSidebar = () => setIsSidebarOpen(true);
+  const handleCloseLevelUpModal = () => setShowLevelUp(false);
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+    setShowLevelUp(false);
+  };
+
 
 
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile header */}
-      <header className="flex items-center justify-between p-4 border-b border-border lg:hidden bg-card/50 backdrop-blur-sm sticky top-0 z-30">
+      <header className={`flex items-center justify-between ${SPACING.HEADER_PADDING} border-b border-border lg:hidden bg-card/50 backdrop-blur-sm sticky top-0 ${Z_INDEX.MOBILE_HEADER}`}>
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 hover-lift"
-          onClick={() => setIsSidebarOpen(true)}
-          aria-label="Open sidebar"
+          className={`${LAYOUT.MOBILE_HEADER_HEIGHT} w-8 hover-lift`}
+          onClick={handleOpenSidebar}
+          aria-label={ARIA_LABELS.OPEN_SIDEBAR}
         >
           <Menu className="h-4 w-4" />
         </Button>
-        <h1 className="font-medium text-sm text-foreground">pixel quest</h1>
+        <h1 className="font-medium text-sm text-foreground">{APP_CONSTANTS.MAIN_TITLE}</h1>
         <div className="w-8" /> {/* Spacer */}
       </header>
 
@@ -102,7 +120,6 @@ const PixelQuestApp = () => {
           level={level}
           xp={xp}
           levelProgress={levelProgress}
-          revealedPixels={revealedPixels}
           completedArtworks={completedArtworks}
           artworkProgress={artworkProgress}
           currentArtwork={currentArtwork}
@@ -111,7 +128,7 @@ const PixelQuestApp = () => {
         {/* Overlay for mobile */}
         {isSidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black/20 z-40 lg:hidden backdrop-blur-sm"
+            className={`fixed inset-0 bg-black/20 ${Z_INDEX.OVERLAY} lg:hidden backdrop-blur-sm`}
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
@@ -119,7 +136,7 @@ const PixelQuestApp = () => {
         {/* Main Content */}
         <main className="flex-1 p-4 lg:p-6 animate-fade-in">
           <div className="max-w-7xl mx-auto">
-            {currentView === 'dashboard' ? (
+            {currentView === APP_CONSTANTS.VIEWS.DASHBOARD ? (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 {/* Quest Panel */}
                 <div className="space-y-4">
@@ -191,25 +208,28 @@ const PixelQuestApp = () => {
       {/* Level Up Modal */}
       {showLevelUp && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in"
-          onClick={() => setShowLevelUp(false)}
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center ${Z_INDEX.MODAL} p-4 ${ANIMATIONS.FADE_IN}`}
+          onClick={handleCloseLevelUpModal}
         >
           <Card 
-            className="w-full max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-card shadow-2xl animate-scale-in"
+            className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-card shadow-2xl ${ANIMATIONS.SCALE_IN}`}
             onClick={(e) => e.stopPropagation()}
           >
             <CardContent className="p-8">
               <div className="flex justify-between items-start mb-6">
                 <div className="flex-1 text-center">
-                  <Trophy className="h-16 w-16 mx-auto mb-4 text-primary animate-bounce" />
-                  <h2 className="text-3xl font-bold mb-2 text-foreground">level {level} complete!</h2>
-                  <p className="text-muted-foreground mb-4">you've unlocked new artworks!</p>
+                  <Trophy className={`h-16 w-16 mx-auto mb-4 text-primary ${ANIMATIONS.BOUNCE}`} />
+                  <h2 className="text-3xl font-bold mb-2 text-foreground">
+                    {SIDEBAR_LABELS.LEVEL_PREFIX}{level}{APP_CONSTANTS.LEVEL_UP_MESSAGES.TITLE_SUFFIX}
+                  </h2>
+                  <p className="text-muted-foreground mb-4">{APP_CONSTANTS.LEVEL_UP_MESSAGES.SUBTITLE}</p>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => setShowLevelUp(false)}
-                  className="h-8 w-8"
+                  onClick={handleCloseLevelUpModal}
+                  className={`${LAYOUT.MOBILE_HEADER_HEIGHT} w-8`}
+                  aria-label={ARIA_LABELS.CLOSE_MODAL}
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -225,7 +245,7 @@ const PixelQuestApp = () => {
                     return (
                       <div className="mb-6">
                         <h3 className="text-xl font-semibold mb-4 text-center text-foreground">
-                          artworks collected from level {completedLevel}
+                          {APP_CONSTANTS.LEVEL_UP_MESSAGES.COLLECTED_FROM_LEVEL}{completedLevel}
                         </h3>
                         <div className={cn(
                           "grid gap-4 mb-6",
@@ -241,7 +261,7 @@ const PixelQuestApp = () => {
                                   alt={artwork.title}
                                   className="w-full h-full object-contain bg-background"
                                 />
-                                <div className="absolute top-2 right-2 bg-green-500 text-white p-1 rounded-full">
+                                <div className={`absolute top-2 right-2 bg-green-500 text-white p-1 ${BORDER_RADIUS.FULL}`}>
                                   <Check className="h-3 w-3" />
                                 </div>
                               </div>
@@ -266,25 +286,22 @@ const PixelQuestApp = () => {
               
               <div className="text-center space-y-4">
                 <div className="space-y-2 text-sm text-muted-foreground">
-                  <p>🎉 congratulations on your progress!</p>
-                  <p>keep completing quests to discover more masterpieces.</p>
+                  <p>{APP_CONSTANTS.LEVEL_UP_MESSAGES.CONGRATULATIONS}</p>
+                  <p>{APP_CONSTANTS.LEVEL_UP_MESSAGES.KEEP_GOING}</p>
                   {level < 25 && (
-                    <p>🎯 next goal: reach level {level + 1} to unlock new artworks!</p>
+                    <p>{APP_CONSTANTS.LEVEL_UP_MESSAGES.NEXT_GOAL_PREFIX}{level + 1}{APP_CONSTANTS.LEVEL_UP_MESSAGES.NEXT_GOAL_SUFFIX}</p>
                   )}
                 </div>
                 
                 <div className="flex gap-3 justify-center">
                   <Button 
                     variant="outline" 
-                    onClick={() => {
-                      setCurrentView('gallery');
-                      setShowLevelUp(false);
-                    }}
+                    onClick={() => handleViewChange(APP_CONSTANTS.VIEWS.GALLERY)}
                   >
-                    view gallery
+                    {APP_CONSTANTS.LEVEL_UP_MESSAGES.VIEW_GALLERY}
                   </Button>
-                  <Button onClick={() => setShowLevelUp(false)}>
-                    continue questing
+                  <Button onClick={handleCloseLevelUpModal}>
+                    {APP_CONSTANTS.LEVEL_UP_MESSAGES.CONTINUE_QUESTING}
                   </Button>
                 </div>
               </div>

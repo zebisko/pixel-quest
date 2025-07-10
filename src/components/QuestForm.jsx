@@ -1,8 +1,9 @@
 import React, { forwardRef, useState } from 'react';
-import { Plus, Star, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Star, ChevronUp } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DIFFICULTY_LEVELS, INPUT_STYLES, QUEST_FORM_MESSAGES, BORDER_RADIUS, SPACING } from '../constants/ui.js';
 
 const QuestForm = forwardRef(({ 
   newQuestTitle, 
@@ -14,18 +15,22 @@ const QuestForm = forwardRef(({
 }, ref) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const handleToggleExpansion = () => setIsExpanded(!isExpanded);
+  
+  const isQuestTitleValid = newQuestTitle.trim().length > 0;
+
   return (
     <div className="space-y-3">
       <div>
-        <h2 className="text-lg font-semibold text-foreground mb-0">add new quest</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-0">{QUEST_FORM_MESSAGES.TITLE}</h2>
         <p className="text-sm text-muted-foreground">
-          create a task to complete and earn xp
+          {QUEST_FORM_MESSAGES.DESCRIPTION}
         </p>
       </div>
       
-      <Card className="border-border bg-card shadow-sm rounded-2xl">
+      <Card className={`border-border bg-card shadow-sm ${BORDER_RADIUS.LARGE}`}>
         {isExpanded && (
-          <CardContent className="space-y-3 p-4">
+          <CardContent className={`space-y-3 ${SPACING.CARD_PADDING}`}>
             <div>
               <Input
                 id="quest-title"
@@ -33,24 +38,20 @@ const QuestForm = forwardRef(({
                 value={newQuestTitle}
                 onChange={(e) => setNewQuestTitle(e.target.value)}
                 onKeyDown={onInputKeyDown}
-                placeholder="what quest shall you embark on?"
+                placeholder={QUEST_FORM_MESSAGES.PLACEHOLDER}
                 className="border-border placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/20 transition-all"
                 style={{
-                  borderRadius: '6px',
-                  fontSize: '20px',
-                  height: 'auto',
-                  padding: '12px 16px'
+                  borderRadius: INPUT_STYLES.BORDER_RADIUS,
+                  fontSize: INPUT_STYLES.FONT_SIZE,
+                  height: INPUT_STYLES.HEIGHT,
+                  padding: INPUT_STYLES.PADDING
                 }}
               />
             </div>
             
             <div className="flex justify-between items-center">
-              <div className="flex gap-1">
-                {[
-                  { value: 'easy', stars: 1, xp: 25 },
-                  { value: 'medium', stars: 2, xp: 50 },
-                  { value: 'hard', stars: 3, xp: 100 }
-                ].map((difficulty, index) => (
+              <div className={`flex ${SPACING.SMALL_GAP}`}>
+                {DIFFICULTY_LEVELS.map((difficulty) => (
                   <button
                     key={difficulty.value}
                     type="button"
@@ -72,7 +73,7 @@ const QuestForm = forwardRef(({
               </div>
               <Button
                 onClick={onAddQuest}
-                disabled={!newQuestTitle.trim()}
+                disabled={!isQuestTitleValid}
                 className="h-10 px-4 py-2 gap-2 font-medium hover:scale-105 transition-transform disabled:hover:scale-100"
               >
                 <Plus className="h-4 w-4" />
@@ -85,21 +86,21 @@ const QuestForm = forwardRef(({
         {/* Collapsed state - clickable area */}
         {!isExpanded && (
           <div 
-            className="h-16 flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors rounded-t-2xl"
-            onClick={() => setIsExpanded(true)}
+            className={`h-16 flex items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors ${BORDER_RADIUS.LARGE}`}
+            onClick={handleToggleExpansion}
           >
-            <span className="text-sm text-muted-foreground">click to add quest</span>
+            <span className="text-sm text-muted-foreground">{QUEST_FORM_MESSAGES.CLICK_TO_ADD}</span>
           </div>
         )}
         
         {/* Collapse bar - only show when expanded */}
         {isExpanded && (
           <button
-            onClick={() => setIsExpanded(false)}
-            className="w-full bg-gray-200 hover:bg-gray-300 transition-colors py-2 px-4 rounded-b-2xl flex items-center justify-center gap-2 text-sm text-gray-600"
+            onClick={handleToggleExpansion}
+            className={`w-full bg-gray-200 hover:bg-gray-300 transition-colors py-2 px-4 ${BORDER_RADIUS.LARGE} flex items-center justify-center gap-2 text-sm text-gray-600`}
           >
             <ChevronUp className="h-4 w-4" />
-            <span>collapse</span>
+            <span>{QUEST_FORM_MESSAGES.COLLAPSE}</span>
           </button>
         )}
       </Card>
