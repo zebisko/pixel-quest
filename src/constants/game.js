@@ -123,6 +123,15 @@ import basquiatSkull from '../assets/24_basquiat_skull.svg';
 import avinashChandra from '../assets/25_avinash_chandra.svg';
 import yvesKleinBlue from '../assets/26_yves_klein_blue.svg';
 import zahaHadid from '../assets/27_zaha_hadid.svg';
+import okeefeFlower from '../assets/31_okeefe_flower.svg';
+import munchScream from '../assets/32_munch_scream.svg';
+import kgSubramanyan from '../assets/33_kg_subramanyan.svg';
+import caravaggio from '../assets/34_caravaggio.svg';
+import akbarPadamsee from '../assets/35_akbar_padamsee.svg';
+import monetWaterLilies from '../assets/36_monet_water_lilies.svg';
+import bhupenKhakhar from '../assets/37_bhupen_khakhar.svg';
+import daVinciMonaLisa from '../assets/38_da_vinci_mona_lisa.svg';
+import nekChand from '../assets/39_nek_chand.svg';
 
 /**
  * Extended artwork database with curated masterpieces from various cultures and periods
@@ -400,6 +409,96 @@ export const ARTWORKS = [
     year: 2008,
     period: "Contemporary Architecture",
     level: 14
+  },
+  {
+    id: 31,
+    svgPath: okeefeFlower,
+    title: "Flower Study",
+    artist: "Georgia O'Keeffe",
+    description: "Modernist floral abstraction",
+    year: 1925,
+    period: "American Modernism",
+    level: 14
+  },
+  {
+    id: 32,
+    svgPath: munchScream,
+    title: "The Scream",
+    artist: "Edvard Munch",
+    description: "Expressionist masterpiece of anxiety",
+    year: 1893,
+    period: "Expressionism",
+    level: 14
+  },
+  {
+    id: 33,
+    svgPath: kgSubramanyan,
+    title: "Folk Narrative",
+    artist: "K.G. Subramanyan",
+    description: "Indian contemporary folk art",
+    year: 1980,
+    period: "Indian Contemporary",
+    level: 14
+  },
+  {
+    id: 34,
+    svgPath: caravaggio,
+    title: "Chiaroscuro Study",
+    artist: "Caravaggio",
+    description: "Baroque dramatic lighting masterpiece",
+    year: 1600,
+    period: "Baroque",
+    level: 15
+  },
+  {
+    id: 35,
+    svgPath: akbarPadamsee,
+    title: "Metascape",
+    artist: "Akbar Padamsee",
+    description: "Indian modernist abstract landscape",
+    year: 1970,
+    period: "Indian Modern",
+    level: 15
+  },
+  {
+    id: 36,
+    svgPath: monetWaterLilies,
+    title: "Water Lilies",
+    artist: "Claude Monet",
+    description: "Impressionist nature study",
+    year: 1919,
+    period: "Impressionism",
+    level: 15
+  },
+  {
+    id: 37,
+    svgPath: bhupenKhakhar,
+    title: "Narrative Painting",
+    artist: "Bhupen Khakhar",
+    description: "Indian contemporary narrative art",
+    year: 1985,
+    period: "Indian Contemporary",
+    level: 15
+  },
+  {
+    id: 38,
+    svgPath: daVinciMonaLisa,
+    title: "Mona Lisa",
+    artist: "Leonardo da Vinci",
+    description: "Renaissance portrait masterpiece",
+    year: 1503,
+    period: "Renaissance",
+    level: 16
+  },
+  {
+    id: 39,
+    svgPath: nekChand,
+    title: "Rock Garden Sculpture",
+    artist: "Nek Chand",
+    description: "Outsider art environmental sculpture",
+    year: 1976,
+    period: "Outsider Art",
+    level: 16
   }
 ];
 
