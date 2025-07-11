@@ -116,6 +116,13 @@ import rothkoRedStudy from '../assets/18_rothko_red_study.svg';
 import bPrabhaWoman from '../assets/19_b_prabha_woman.svg';
 import mondrianComposition from '../assets/20_mondrian_composition.svg';
 import duchampFountain from '../assets/02_duchamp_fountain.svg';
+import hokusaiGreatWave from '../assets/21_hokusai_great_wave.svg';
+import satishGujral from '../assets/22_satish_gujral.svg';
+import kahloThornNecklace from '../assets/23_kahlo_thorn_necklace.svg';
+import basquiatSkull from '../assets/24_basquiat_skull.svg';
+import avinashChandra from '../assets/25_avinash_chandra.svg';
+import yvesKleinBlue from '../assets/26_yves_klein_blue.svg';
+import zahaHadid from '../assets/27_zaha_hadid.svg';
 
 /**
  * Extended artwork database with curated masterpieces from various cultures and periods
@@ -323,6 +330,76 @@ export const ARTWORKS = [
     year: 1917,
     period: "Conceptual",
     level: 12
+  },
+  {
+    id: 21,
+    svgPath: hokusaiGreatWave,
+    title: "The Great Wave off Kanagawa",
+    artist: "Katsushika Hokusai",
+    description: "Iconic Japanese ukiyo-e woodblock print",
+    year: 1831,
+    period: "Ukiyo-e",
+    level: 13
+  },
+  {
+    id: 22,
+    svgPath: satishGujral,
+    title: "Abstract Composition",
+    artist: "Satish Gujral",
+    description: "Indian modernist abstract painting",
+    year: 1975,
+    period: "Indian Modern",
+    level: 13
+  },
+  {
+    id: 23,
+    svgPath: kahloThornNecklace,
+    title: "Self-Portrait with Thorn Necklace",
+    artist: "Frida Kahlo",
+    description: "Mexican surrealist self-portrait",
+    year: 1940,
+    period: "Surrealism",
+    level: 13
+  },
+  {
+    id: 24,
+    svgPath: basquiatSkull,
+    title: "Skull",
+    artist: "Jean-Michel Basquiat",
+    description: "Neo-expressionist street art masterpiece",
+    year: 1981,
+    period: "Neo-Expressionism",
+    level: 13
+  },
+  {
+    id: 25,
+    svgPath: avinashChandra,
+    title: "Tantric Abstraction",
+    artist: "Avinash Chandra",
+    description: "Indian tantric art inspired abstract work",
+    year: 1970,
+    period: "Indian Abstract",
+    level: 14
+  },
+  {
+    id: 26,
+    svgPath: yvesKleinBlue,
+    title: "IKB 191",
+    artist: "Yves Klein",
+    description: "International Klein Blue monochrome",
+    year: 1962,
+    period: "Nouveau Réalisme",
+    level: 14
+  },
+  {
+    id: 27,
+    svgPath: zahaHadid,
+    title: "Architectural Vision",
+    artist: "Zaha Hadid",
+    description: "Deconstructivist architectural design",
+    year: 2008,
+    period: "Contemporary Architecture",
+    level: 14
   }
 ];
 
