@@ -44,7 +44,7 @@ const PixelQuestApp = () => {
   const [newQuestDifficulty, setNewQuestDifficulty] = useState(APP_CONSTANTS.DEFAULT_DIFFICULTY);
   const [currentView, setCurrentView] = useState(APP_CONSTANTS.DEFAULT_VIEW);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
   const inputRef = useRef(null);
 
 
@@ -139,7 +139,7 @@ const PixelQuestApp = () => {
         "p-4 lg:p-6 transition-all duration-300 ease-in-out",
         ANIMATIONS.FADE_IN,
         // Account for fixed sidebar width using Clean Code constants
-        isSidebarCollapsed ? `lg:${LAYOUT.SIDEBAR_MARGIN_COLLAPSED}` : `lg:${LAYOUT.SIDEBAR_MARGIN_EXPANDED}`
+        isSidebarCollapsed ? LAYOUT.SIDEBAR_MARGIN_COLLAPSED : LAYOUT.SIDEBAR_MARGIN_EXPANDED
       )}>
           <div className="max-w-7xl mx-auto">
             {currentView === APP_CONSTANTS.VIEWS.DASHBOARD ? (

@@ -4,13 +4,16 @@
 export const LAYOUT = {
   SIDEBAR_WIDTH_EXPANDED: 'w-80', // 320px
   SIDEBAR_WIDTH_COLLAPSED: 'w-16', // 64px
-  SIDEBAR_MARGIN_EXPANDED: 'ml-80', // 320px margin for main content
-  SIDEBAR_MARGIN_COLLAPSED: 'ml-16', // 64px margin for main content
+  SIDEBAR_MARGIN_EXPANDED: 'lg:ml-80', // 320px margin for main content (desktop only)
+  SIDEBAR_MARGIN_COLLAPSED: 'lg:ml-16', // 64px margin for main content (desktop only)
   MOBILE_HEADER_HEIGHT: 'h-8',
   BUTTON_HEIGHT: 'h-8',
   PROGRESS_BAR_HEIGHT: 'h-2',
   QUEST_CARD_HEIGHT: 'h-9',
   QUEST_LIST_MAX_HEIGHT: 'max-h-96',
+  // Dynamic content width based on sidebar state
+  CONTENT_WIDTH_EXPANDED: 'calc(100% - 320px)', // Full width minus expanded sidebar
+  CONTENT_WIDTH_COLLAPSED: 'calc(100% - 64px)', // Full width minus collapsed sidebar
 };
 
 export const SPACING = {
