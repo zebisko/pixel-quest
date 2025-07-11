@@ -22,6 +22,7 @@ import QuestCard from './components/QuestCard.jsx';
 import QuestForm from './components/QuestForm.jsx';
 import ArtworkPanel from './components/ArtworkPanel.jsx';
 import GalleryView from './components/GalleryView.jsx';
+import EditQuestModal from './components/EditQuestModal.jsx';
 
 const PixelQuestApp = () => {
   const {
@@ -33,6 +34,7 @@ const PixelQuestApp = () => {
     addQuest,
     completeQuest,
     deleteQuest,
+    updateQuest,
     levelProgress,
     artworkProgress,
     completedArtworks,
@@ -45,6 +47,8 @@ const PixelQuestApp = () => {
   const [currentView, setCurrentView] = useState(APP_CONSTANTS.DEFAULT_VIEW);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const [editingQuest, setEditingQuest] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const inputRef = useRef(null);
 
 
@@ -82,6 +86,23 @@ const PixelQuestApp = () => {
   const handleDeleteQuest = useCallback((questId) => {
     deleteQuest(questId);
   }, [deleteQuest]);
+
+  const handleEditQuest = useCallback((questId) => {
+    const questToEdit = quests.find(q => q.id === questId);
+    setEditingQuest(questToEdit);
+    setIsEditModalOpen(true);
+  }, [quests]);
+
+  const handleSaveQuest = useCallback((questId, newTitle, newXp) => {
+    updateQuest(questId, { title: newTitle, xp: newXp });
+    setIsEditModalOpen(false);
+    setEditingQuest(null);
+  }, [updateQuest]);
+
+  const handleCloseEditModal = useCallback(() => {
+    setIsEditModalOpen(false);
+    setEditingQuest(null);
+  }, []);
 
   // UI state management
   const handleOpenSidebar = () => setIsSidebarOpen(true);
@@ -184,6 +205,7 @@ const PixelQuestApp = () => {
                                 quest={quest} 
                                 onComplete={handleCompleteQuest}
                                 onDelete={handleDeleteQuest}
+                                onEdit={handleEditQuest}
                               />
                             ))
                           )}
@@ -314,6 +336,14 @@ const PixelQuestApp = () => {
           </Card>
         </div>
       )}
+
+      {/* Edit Quest Modal */}
+      <EditQuestModal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        quest={editingQuest}
+        onSave={handleSaveQuest}
+      />
     </div>
   );
 };
