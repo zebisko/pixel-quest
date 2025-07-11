@@ -1,15 +1,20 @@
 import React from 'react';
-import { Check, Trash2, Edit } from 'lucide-react';
+import { Check, Trash2, Edit, Ban } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BORDER_RADIUS, TYPOGRAPHY, ANIMATIONS, ARIA_LABELS } from '../constants/ui.js';
 
-const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit }) => {
+const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit, onStatusChange }) => {
   const [isCompleted, setIsCompleted] = React.useState(false);
 
   const COMPLETION_ANIMATION_DELAY = 300;
 
   const handleComplete = () => {
+    // If already completed, don't do anything
+    if (quest.status === 'completed') {
+      return;
+    }
+    
     setIsCompleted(true);
     setTimeout(() => {
       onComplete(quest.id);
@@ -24,6 +29,10 @@ const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit }) => {
     onEdit(quest.id);
   };
 
+  const handleCancel = () => {
+    onStatusChange(quest.id, 'cancelled');
+  };
+
   const getDifficultyStars = (difficulty) => {
     const starCount = difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3;
     return Array.from({ length: starCount }).map((_, i) => (
@@ -32,9 +41,30 @@ const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit }) => {
   };
 
   const getQuestTitleClasses = () => {
-    return `font-medium text-sm truncate text-foreground leading-tight transition-all ${ANIMATIONS.TRANSITION_DURATION} ${
-      isCompleted ? 'line-through opacity-60' : ''
-    }`;
+    const baseClasses = `font-medium text-sm truncate text-foreground leading-tight transition-all ${ANIMATIONS.TRANSITION_DURATION}`;
+    
+    if (isCompleted || quest.status === 'completed') {
+      return `${baseClasses} line-through opacity-60`;
+    }
+    
+    if (quest.status === 'cancelled') {
+      return `${baseClasses}`;
+    }
+    
+    return baseClasses;
+  };
+
+  const getQuestTitleStyle = () => {
+    if (quest.status === 'cancelled') {
+      return {
+        textDecoration: 'line-through',
+        textDecorationStyle: 'double',
+        textDecorationColor: 'rgb(239 68 68)', // red-500
+        textDecorationThickness: '2px'
+      };
+    }
+    
+    return {};
   };
 
   return (
@@ -50,7 +80,7 @@ const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit }) => {
           </button>
           
           <div className="flex-1 min-w-0 space-y-1">
-            <h4 className={getQuestTitleClasses()}>
+            <h4 className={getQuestTitleClasses()} style={getQuestTitleStyle()}>
               {quest.title}
             </h4>
             <div className="flex items-center gap-2">
@@ -64,6 +94,17 @@ const QuestCard = React.memo(({ quest, onComplete, onDelete, onEdit }) => {
           </div>
           
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            {quest.status !== 'completed' && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleCancel}
+                className={`h-8 w-8 p-0 text-muted-foreground hover:text-red-500 hover:scale-105 transition-all ${BORDER_RADIUS.SMALL}`}
+                aria-label={`Cancel quest: ${quest.title}`}
+              >
+                <Ban className="h-3.5 w-3.5" />
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="sm"

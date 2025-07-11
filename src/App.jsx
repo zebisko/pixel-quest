@@ -94,10 +94,28 @@ const PixelQuestApp = () => {
     setIsEditModalOpen(true);
   }, [quests]);
 
-  const handleSaveQuest = useCallback((questId, newTitle, newXp) => {
-    updateQuest(questId, { title: newTitle, xp: newXp });
+  const handleSaveQuest = useCallback((questId, newTitle, newXp, newStatus) => {
+    const currentQuest = quests.find(q => q.id === questId);
+    
+    // If status is being changed to 'complete', trigger the completion logic
+    if (newStatus === 'complete' && currentQuest?.status !== 'complete') {
+      // First update the quest with new title and XP
+      updateQuest(questId, { title: newTitle, xp: newXp });
+      // Then trigger completion
+      setTimeout(() => {
+        completeQuest(questId, 'completed');
+      }, 0);
+    } else {
+      // Otherwise, just update the quest normally
+      updateQuest(questId, { title: newTitle, xp: newXp, status: newStatus });
+    }
+    
     setIsEditModalOpen(false);
     setEditingQuest(null);
+  }, [updateQuest, completeQuest, quests]);
+
+  const handleStatusChange = useCallback((questId, newStatus) => {
+    updateQuest(questId, { status: newStatus });
   }, [updateQuest]);
 
   const handleCloseEditModal = useCallback(() => {
@@ -207,6 +225,7 @@ const PixelQuestApp = () => {
                                 onComplete={handleCompleteQuest}
                                 onDelete={handleDeleteQuest}
                                 onEdit={handleEditQuest}
+                                onStatusChange={handleStatusChange}
                               />
                             ))
                           )}

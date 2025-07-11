@@ -7,11 +7,19 @@ import { DIFFICULTY_LEVELS } from '../constants/ui.js';
 const EditQuestModal = ({ isOpen, onClose, quest, onSave }) => {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedDifficulty, setEditedDifficulty] = useState('easy');
+  const [editedStatus, setEditedStatus] = useState('incomplete');
+
+  const statusOptions = [
+    { value: 'incomplete', label: 'Incomplete' },
+    { value: 'complete', label: 'Complete' },
+    { value: 'cancelled', label: 'Cancelled' }
+  ];
 
   useEffect(() => {
     if (quest) {
       console.log('EditQuestModal: Quest data:', quest);
       setEditedTitle(quest.title);
+      setEditedStatus(quest.status || 'incomplete');
       // Find difficulty based on XP value
       const difficulty = DIFFICULTY_LEVELS.find(d => d.xp === quest.xp);
       console.log('EditQuestModal: Found difficulty:', difficulty, 'for XP:', quest.xp);
@@ -23,13 +31,14 @@ const EditQuestModal = ({ isOpen, onClose, quest, onSave }) => {
     if (editedTitle.trim()) {
       const selectedDifficulty = DIFFICULTY_LEVELS.find(d => d.value === editedDifficulty);
       const xpValue = selectedDifficulty?.xp || 25;
-      onSave(quest.id, editedTitle.trim(), xpValue);
+      onSave(quest.id, editedTitle.trim(), xpValue, editedStatus);
       onClose();
     }
   };
 
   const handleCancel = () => {
     setEditedTitle(quest?.title || '');
+    setEditedStatus(quest?.status || 'incomplete');
     const difficulty = DIFFICULTY_LEVELS.find(d => d.xp === quest?.xp);
     setEditedDifficulty(difficulty?.value || 'easy');
     onClose();
@@ -77,6 +86,24 @@ const EditQuestModal = ({ isOpen, onClose, quest, onSave }) => {
               {DIFFICULTY_LEVELS.map((difficulty) => (
                 <option key={difficulty.value} value={difficulty.value}>
                   {difficulty.xp} XP {'★'.repeat(difficulty.stars)}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="quest-status" className="block text-sm font-medium mb-2">
+              Status
+            </label>
+            <select
+              id="quest-status"
+              value={editedStatus}
+              onChange={(e) => setEditedStatus(e.target.value)}
+              className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+            >
+              {statusOptions.map((status) => (
+                <option key={status.value} value={status.value}>
+                  {status.label}
                 </option>
               ))}
             </select>

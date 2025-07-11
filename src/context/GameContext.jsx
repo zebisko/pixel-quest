@@ -318,20 +318,21 @@ const GameProvider = ({ children }) => {
     try {
       console.log('🎯 QUEST COMPLETION STARTED:', { questId, status });
       
-      // First, update the quest status
+      // Update the quest status and keep it in the active list
       const updatedQuests = quests.map(quest => 
         quest.id === questId ? { ...quest, status, completedAt: new Date().toISOString() } : quest
       );
       
-      // Move completed quest to completedQuests
+      // Find the completed quest for processing
       const completedQuest = updatedQuests.find(q => q.id === questId);
       if (completedQuest) {
         console.log('✅ Quest completed:', completedQuest.title, 'XP:', completedQuest.xp);
+        // Add to completed quests history but keep in active list
         setCompletedQuests(prev => [completedQuest, ...prev]);
       }
       
-      // Update the quests list
-      setQuests(updatedQuests.filter(q => q.id !== questId));
+      // Update the quests list (keep the quest visible)
+      setQuests(updatedQuests);
       
       // Only process for completed quests, not cancelled ones
       if (status === 'completed') {
