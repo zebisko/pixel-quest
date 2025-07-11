@@ -339,7 +339,7 @@ export const ARTWORKS = [
     description: "Iconic Japanese ukiyo-e woodblock print",
     year: 1831,
     period: "Ukiyo-e",
-    level: 13
+    level: 12
   },
   {
     id: 22,
@@ -349,7 +349,7 @@ export const ARTWORKS = [
     description: "Indian modernist abstract painting",
     year: 1975,
     period: "Indian Modern",
-    level: 13
+    level: 12
   },
   {
     id: 23,
@@ -379,7 +379,7 @@ export const ARTWORKS = [
     description: "Indian tantric art inspired abstract work",
     year: 1970,
     period: "Indian Abstract",
-    level: 14
+    level: 13
   },
   {
     id: 26,
@@ -389,7 +389,7 @@ export const ARTWORKS = [
     description: "International Klein Blue monochrome",
     year: 1962,
     period: "Nouveau Réalisme",
-    level: 14
+    level: 13
   },
   {
     id: 27,
