@@ -62,6 +62,7 @@ const PixelQuestApp = () => {
     addQuest(newQuestTitle.trim(), newQuestDifficulty);
     setNewQuestTitle('');
     
+    // Keep focus on input after adding quest
     setTimeout(() => {
       inputRef.current?.focus();
     }, APP_CONSTANTS.INPUT_FOCUS_DELAY);

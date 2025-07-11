@@ -23,7 +23,17 @@ const QuestForm = forwardRef(({
 }, ref) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleToggleExpansion = () => setIsExpanded(!isExpanded);
+  const handleToggleExpansion = () => {
+    const newExpanded = !isExpanded;
+    setIsExpanded(newExpanded);
+    
+    // Auto-focus input when expanding
+    if (newExpanded) {
+      setTimeout(() => {
+        ref.current?.focus();
+      }, 100); // Small delay to ensure DOM update
+    }
+  };
   
   const isQuestTitleValid = newQuestTitle.trim().length > 0;
 
