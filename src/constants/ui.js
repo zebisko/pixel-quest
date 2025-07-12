@@ -93,7 +93,7 @@ export const DIFFICULTY_LEVELS = [
 
 export const INPUT_STYLES = {
   BORDER_RADIUS: '6px',
-  FONT_SIZE: '20px',
+  FONT_SIZE: '16px',
   HEIGHT: 'auto',
   PADDING: '12px 16px',
 };
