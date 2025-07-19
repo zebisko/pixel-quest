@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Image, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, Image, BookOpen, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
@@ -141,6 +141,15 @@ const Sidebar = ({
               </span>
             </>
           )}
+        </Button>
+        
+        <Button
+          variant={currentView === 'logbook' ? 'default' : 'ghost'}
+          className={getNavButtonClasses()}
+          onClick={() => handleViewChange('logbook')}
+        >
+          <BookOpen className={getIconClasses()} />
+          {!isSidebarCollapsed && 'Logbook'}
         </Button>
       </div>
     </nav>

@@ -22,6 +22,7 @@ import QuestCard from './components/QuestCard.jsx';
 import QuestForm from './components/QuestForm.jsx';
 import ArtworkPanel from './components/ArtworkPanel.jsx';
 import GalleryView from './components/GalleryView.jsx';
+import LogbookView from './components/LogbookView.jsx';
 import EditQuestModal from './components/EditQuestModal.jsx';
 
 const PixelQuestApp = () => {
@@ -182,7 +183,7 @@ const PixelQuestApp = () => {
         isSidebarCollapsed ? LAYOUT.SIDEBAR_MARGIN_COLLAPSED : LAYOUT.SIDEBAR_MARGIN_EXPANDED
       )}>
           <div className="max-w-7xl mx-auto">
-            {currentView === APP_CONSTANTS.VIEWS.DASHBOARD ? (
+{currentView === APP_CONSTANTS.VIEWS.DASHBOARD ? (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                 {/* Quest Panel */}
                 <div className="space-y-4">
@@ -241,14 +242,18 @@ const PixelQuestApp = () => {
                   revealedPixels={revealedPixels}
                 />
               </div>
-            ) : (
+            ) : currentView === APP_CONSTANTS.VIEWS.GALLERY ? (
               <GalleryView 
                 level={level}
                 xp={xp}
                 completedArtworks={completedArtworks}
                 setCurrentView={setCurrentView}
               />
-            )}
+            ) : currentView === 'logbook' ? (
+              <LogbookView 
+                setCurrentView={setCurrentView}
+              />
+            ) : null}
           </div>
         </main>
 
