@@ -81,6 +81,7 @@ const GameProvider = ({ children }) => {
     const savedState = localStorage.getItem('pixelQuestSave');
     if (savedState) {
       try {
+        const parsed = JSON.parse(savedState);
         const {
           quests: savedQuests,
           completedQuests: savedCompletedQuests,
@@ -92,7 +93,7 @@ const GameProvider = ({ children }) => {
           currentArtworkIndex: savedArtworkIndex,
           completedArtworks: savedCompletedArtworks,
           streak: savedStreak
-        } = JSON.parse(savedState);
+        } = parsed;
         
         setQuests(Array.isArray(savedQuests) ? savedQuests : []);
         setCompletedQuests(Array.isArray(savedCompletedQuests) ? savedCompletedQuests : []);
@@ -128,9 +129,34 @@ const GameProvider = ({ children }) => {
         setStreak(0);
       }
     }
+
+    // Migration: Check for legacy quest data and merge if found
+    const legacyQuests = localStorage.getItem('quests');
+    if (legacyQuests) {
+      try {
+        const parsedLegacyQuests = JSON.parse(legacyQuests);
+        if (Array.isArray(parsedLegacyQuests) && parsedLegacyQuests.length > 0) {
+          console.log('Migrating legacy quest data:', parsedLegacyQuests.length, 'quests found');
+          setQuests(prevQuests => {
+            // Merge legacy quests, avoiding duplicates based on ID
+            const existingIds = new Set(prevQuests.map(q => q.id));
+            const newQuests = parsedLegacyQuests.filter(q => !existingIds.has(q.id));
+            return [...prevQuests, ...newQuests];
+          });
+          localStorage.removeItem('quests');
+          console.log('Legacy quest migration completed');
+        } else {
+          localStorage.removeItem('quests');
+        }
+      } catch (error) {
+        console.error('Error migrating legacy quest data:', error);
+        localStorage.removeItem('quests');
+      }
+    }
   }, []);
 
-  // Save game state to localStorage whenever it changes
+  // Unified storage: Save all game state to localStorage whenever any part changes
+  // This ensures consistent data persistence across page refreshes and browser sessions
   useEffect(() => {
     try {
       const gameState = {
@@ -307,12 +333,8 @@ const GameProvider = ({ children }) => {
     
     setQuests(prevQuests => [...prevQuests, newQuest]);
     
-    // Save to localStorage
-    const updatedQuests = [...quests, newQuest];
-    localStorage.setItem('quests', JSON.stringify(updatedQuests));
-    
     return newQuest;
-  }, [difficultyLevels, quests]);
+  }, [difficultyLevels]);
 
   const completeQuest = useCallback(async (questId, status = 'completed') => {
     try {
@@ -341,7 +363,6 @@ const GameProvider = ({ children }) => {
         let newTotalXp = 0;
         setXp(prevXp => {
           newTotalXp = prevXp + xpEarned;
-          localStorage.setItem('xp', newTotalXp);
           return newTotalXp;
         });
         
